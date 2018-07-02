@@ -1,6 +1,7 @@
 package testeDeSoftware;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,9 +46,9 @@ public class Operacao {
     
     }
     
-  /*  public List<AlunoNota> Aprovados(List<AlunoNota> lstNotas)
+   public List<AlunoNota> Aprovados(List<AlunoNota> lstNotas)
     {
-        List<AlunoNota> lstAprovados = null;
+        List<AlunoNota> lstAprovados =new ArrayList<>();
         for(int i=0;i< lstNotas.size();i++)
         {
           if(lstNotas.get(i).getNota()>60)
@@ -60,7 +61,7 @@ public class Operacao {
     
     public List<AlunoNota> Reprovados(List<AlunoNota> lstNotas)
     {
-        List<AlunoNota> lstReprovados = null;
+        List<AlunoNota> lstReprovados = new ArrayList<>();
         for(int i=0;i< lstNotas.size();i++)
         {
           if(lstNotas.get(i).getNota()<60)
@@ -69,7 +70,7 @@ public class Operacao {
         NumeroReprovados(lstReprovados.size());
         return lstReprovados;
     
-    }*/
+    }
  
    public int NumeroAprovados(int quantidade)
    {

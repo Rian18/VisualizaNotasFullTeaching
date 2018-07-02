@@ -41,7 +41,41 @@
                 Média: ${media} <br/>
                 Menor: ${menor.nome} <br/>
                 Maior: ${maior.nome} <br/>
+                <table class="table table-hover">
+                    <thead>
+                    <tr class="table-primary">
+                    <th><center>Aprovados</center></th>
+                    <th><center>Notas</center></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="aprovado" items="${aprovados}">
+                        <tr>
+                        <td><center>${aprovado.nome}</center></td> 
+                        <td><center>${aprovado.nota}</center></td> 
+                       </tr>
+                    </c:forEach>
+                    </tbody>
+
+                </table>
                 <br/>
+                <table class="table table-hover">
+                    <thead>
+                    <tr class="table-primary">
+                    <th><center>Reprovados</center></th>
+                    <th><center>Notas</center></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="reprovado" items="${reprovados}">
+                        <tr>
+                        <td><center>${reprovado.nome}</center></td> 
+                        <td><center>${reprovado.nota}</center></td> 
+                       </tr>
+                    </c:forEach>
+                    </tbody>
+
+                </table>
 
 
             </div>

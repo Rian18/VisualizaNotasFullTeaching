@@ -25,13 +25,15 @@ public class CommandNotasAlunos implements Comando {
         Double media = op.Media(lista);
         AlunoNota menor =op.Menor(lista);
         AlunoNota maior =op.Maior(lista);
-       // op.Aprovados(lista);
-        //op.Reprovados(lista);
+        op.Aprovados(lista);
+        op.Reprovados(lista);
 
         request.setAttribute("turmaAlunos", lista);
         request.setAttribute("media", media);
         request.setAttribute("menor", menor);
         request.setAttribute("maior", maior);
+        request.setAttribute("aprovados", op.Aprovados(lista));
+        request.setAttribute("reprovados",op.Reprovados(lista));
         
         RequestDispatcher despachante = request.getRequestDispatcher("/WEB-INF/nota-detalhe.jsp");
         despachante.forward(request, response);
