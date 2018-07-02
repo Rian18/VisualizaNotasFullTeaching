@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -18,38 +19,28 @@
         <div class="container">
             <div class="container">
                 <h1>Notas da disciplina </h1>
-                </div>
+            </div>
             <div class="container">
-                <table class="table table-bordered">
+                <table class="table table-hover">
                     <thead>
-                        <tr>
-                            <th> Alunos:</th>
-                            <th> Nota  </th>
-                        </tr>
+                    <tr class="table-primary">
+                    <th><center>Aluno</center></th>
+                    <th><center>Nota</center></th>
+                    </tr>
                     </thead>
                     <tbody>
+                    <c:forEach var="aluno" items="${turmaAlunos}">
                         <tr>
-                            <td>Aluno 01</td>
-                            <td>70</td>
-                        </tr>
-                        <tr>
-                            <td>Aluno 02 </td>
-                            <td>80</td>
-                        </tr>
-                        <tr>
-                            <td>Aluno 03</td>
-                            <td>50</td>
-                        </tr>
-                        <tr>
-                            <td>Aluno 04</td>
-                            <td>40</td>
-                        </tr>
-                        <tr>
-                            <td>Aluno 05</td>
-                            <td>30</td>
-                        </tr>
+                        <td><center>${aluno.nome}</center></td> 
+                        <td><center>${aluno.nota}</center></td> 
+                       </tr>
+                    </c:forEach>
                     </tbody>
+
                 </table>
+                Média: ${media} <br/>
+                Menor: ${menor.nome} <br/>
+                Maior: ${maior.nome} <br/>
                 <br/>
 
 
