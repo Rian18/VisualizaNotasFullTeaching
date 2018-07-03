@@ -104,7 +104,17 @@ public class Operacao {
         return mediana;
     }
 
-
+    public strictfp Double getDesvioPadrao(List<AlunoNota> lstNotas) {
+        Double media = Media(lstNotas);
+        int tam = lstNotas.size();
+        Double desvPadrao = 0D;
+        for (AlunoNota vlr : lstNotas){
+            Double aux = vlr.getNota() - media;
+            desvPadrao += aux * aux;
+        }
+        return Math.sqrt(desvPadrao / (tam - 1));
+        }
+    
     
     
    public int NumeroAprovados(int quantidade)
