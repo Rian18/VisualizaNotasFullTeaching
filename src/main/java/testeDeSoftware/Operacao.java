@@ -72,6 +72,41 @@ public class Operacao {
     
     }
  
+    public AlunoNota mediana(List<AlunoNota> lstNotas){
+        AlunoNota mediana = null;
+        AlunoNota aux = null;
+        List<AlunoNota> lstNotasOrdenada;
+        int sizeList = lstNotas.size();
+        int meio, depoisMeio;
+        double medianna;
+        
+        for(int i = 0; i<lstNotas.size(); i++){
+            for(int j = 0; j<lstNotas.size()-1; j++){
+                if(lstNotas.get(j).getNota() > lstNotas.get(j+1).getNota()){
+                    aux = lstNotas.get(j);
+                    lstNotas.set(j, lstNotas.get(j+1));
+                    lstNotas.set(j+1, aux);
+                }
+            }
+        }
+        
+        if(sizeList%2 == 0){
+            meio = sizeList/2;
+            depoisMeio = meio + 1;
+            medianna = (lstNotas.get(meio).getNota()+lstNotas.get(depoisMeio).getNota())/2;
+            mediana.setNota(medianna);
+        }else{
+            sizeList--;
+            meio = sizeList/2;
+            medianna = lstNotas.get(meio).getNota();
+            mediana.setNota(medianna);
+        }
+        return mediana;
+    }
+
+
+    
+    
    public int NumeroAprovados(int quantidade)
    {
        return quantidade; 
