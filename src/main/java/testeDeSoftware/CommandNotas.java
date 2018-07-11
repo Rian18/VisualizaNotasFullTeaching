@@ -14,7 +14,10 @@ public class CommandNotas implements Comando {
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        
+        List<Turma> lstTurma = new ArrayList<>();
+        ManipulaJson mj = new ManipulaJson();
+        lstTurma = mj.loadJSON();
+        request.setAttribute("turmaAlunos", lstTurma);        
         RequestDispatcher despachante = request.getRequestDispatcher("/WEB-INF/notas.jsp");
         despachante.forward(request, response);
 

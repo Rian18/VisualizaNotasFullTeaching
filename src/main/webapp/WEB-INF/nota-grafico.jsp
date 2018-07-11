@@ -6,42 +6,65 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Notas dos alunos</title>
         <%@include file ="jspf/cabecalho.jspf"%>
-       
-          <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawStuff);
 
-      function drawStuff() {
-       var data = new google.visualization.DataTable();
-                data.addColumn('string', 'Alunos');
-                data.addColumn('number', 'Notas');
-                $.each(dados, function (i, dados)
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        
+        <script type="text/javascript">
+            var dados = <%=request.getAttribute("colaboradoresJson")%>;
+            google.charts.load("current", {packages: ["corechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Contribuidores');
+                data.addColumn('number', 'Commits');
+                foreach(dados, function (i, dados)
                 {
-                    var nomeAluno = dados.nomeAluno;
-                    var notaFinal = dados.notaFinal;
-                    data.addRows([[nomeAluno, notaFinal]]);
+                    var nome = dados.nome;
+                    var nota = dados.nota;
+                    data.addRows([[nome, nota]]);
                 });
-
-        var options = {
-          title: 'Chess opening moves',
-          width: 900,
-          legend: { position: 'none' },
-          chart: { title: 'Chess opening moves',
-                   subtitle: 'popularity by percentage' },
-          bars: 'horizontal', // Required for Material Bar Charts.
-          axes: {
-            x: {
-              0: { side: 'top', label: 'Percentage'} // Top x-axis.
+                var options = {
+                    title: 'Commits por Contribuidor',
+                    is3D: true,
+                };
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                chart.draw(data, options);
             }
-          },
-          bar: { groupWidth: "90%" }
-        };
+            ;
+        </script>
+        
+        <script type="text/javascript">
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Element", "Density", { role: "style" } ],
+        ["Copper", 8.94, "#b87333"],
+        ["Silver", 10.49, "silver"],
+        ["Gold", 19.30, "gold"],
+        ["Platinum", 21.45, "color: #e5e4e2"]
+      ]);
 
-        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-        chart.draw(data, options);
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Médias dos Alunos da Turma",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
       };
-    </script>
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+  }
+  </script>
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -51,17 +74,18 @@
                 </ul>
             </div>
         </nav>
-   
-                <h1> Análises da disciplina </h1>
-           
-            Teste
-            
-       
-                 <div id="top_x_div" style="width: 900px; height: 500px;"></div>
-                Teste
-         
 
-    
+        <h1> Análises da disciplina </h1>
+
+        Teste
+
+
+        <!-- Identify where the chart should be drawn. -->
+       <div id="piechart" style="width: 500px; height:300px;"></div>
+        Teste
+
+
+
     </body>
 
 </html>

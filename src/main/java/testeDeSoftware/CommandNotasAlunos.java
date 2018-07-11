@@ -12,32 +12,46 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CommandNotasAlunos implements Comando {
 
+    private List<Turma> lstTurma = new ArrayList<>();
+
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        File caminho = new File("C:/Users/Rian Alves/Desktop/arquivo1.json");
+
         ManipulaJson mj = new ManipulaJson();
-        Turma turma = new Turma();
-        turma = mj.loadJSON(caminho);
-        List<AlunoNota> lista = new ArrayList<>();
-        lista = turma.getLstAluno();
+        lstTurma = mj.loadJSON();
+        String nomeDisciplina = request.getParameter("nome");
+        Turma turma = this.findById(nomeDisciplina);
 
         Operacao op = new Operacao();
-        Double media = op.Media(lista);
-        AlunoNota menor =op.Menor(lista);
-        AlunoNota maior =op.Maior(lista);
-        op.Aprovados(lista);
-        op.Reprovados(lista);
+        Double media = op.Media(turma.getLstAluno());
+        AlunoNota menor = op.Menor(turma.getLstAluno());
+        AlunoNota maior = op.Maior(turma.getLstAluno());
+        op.Aprovados(turma.getLstAluno());
+        op.Reprovados(turma.getLstAluno());
+        
+        Gson gson = new Gson();
+        String alunosJson = gson.toJson(turma.getLstAluno());
 
-        request.setAttribute("turmaAlunos", lista);
+        request.setAttribute("turmaAlunos", turma.getLstAluno());
+        request.setAttribute("alunosJson", alunosJson);
         request.setAttribute("media", media);
         request.setAttribute("menor", menor);
         request.setAttribute("maior", maior);
-        request.setAttribute("aprovados", op.Aprovados(lista));
-        request.setAttribute("reprovados",op.Reprovados(lista));
-        
+        request.setAttribute("aprovados", op.Aprovados(turma.getLstAluno()));
+        request.setAttribute("reprovados", op.Reprovados(turma.getLstAluno()));
+
         RequestDispatcher despachante = request.getRequestDispatcher("/WEB-INF/nota-detalhe.jsp");
         despachante.forward(request, response);
 
     }
 
+    public Turma findById(String nomeDisciplina) {
+        for (Turma turma : lstTurma) {
+            if (turma.getDisciplina().equals(nomeDisciplina)) {
+                return turma;
+            }
+            
+        }
+        return null;
+    }
 }

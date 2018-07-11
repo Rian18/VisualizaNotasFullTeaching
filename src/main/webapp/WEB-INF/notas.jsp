@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,7 +17,7 @@
         </nav>
         <div class="container">
             <div class="container">
-                <h1>Notas da disciplina </h1>
+                <h1>Notas das disciplinas </h1>
                 <p> Nome do professor:</p>
 
  
@@ -25,18 +25,22 @@
             <div class="container">
                 <table class="table table-bordered">
                     <thead>
-                        <tr>
-                            <th> Nota dos alunos:</th>
-                            <th> Acessar gráficos:  </th>
-                        </tr>
+                    <tr class="table-primary">
+                    <th><center>Disciplinas</center></th>
+                    <th><center>Acessar Gráficos</center></th>
+                    </tr>
                     </thead>
                     <tbody>
+                    <c:forEach var="turma" items="${turmaAlunos}">
                         <tr>
-                    <td><a href="nota-detalhe.html" >Física </a></td>
-                    <td><a href="nota-grafico.html" ><i class="fa fa-bar-chart" size="font-size:45px"></i></a> </td>
-                    </tr>
+                        <td><center><a href="nota-detalhe.html?nome=${turma.disciplina}" >${turma.disciplina}</a></center></td> 
+                        <td><center><a href="nota-grafico.html?nome=${turma.disciplina}" ><i class="fa fa-bar-chart" size="font-size:45px"></i></a></center></td> 
+                       </tr>
+                    </c:forEach>
                     </tbody>
+
                 </table>
+               
                 <br/>
 
 

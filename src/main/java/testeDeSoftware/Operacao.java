@@ -21,6 +21,7 @@ public class Operacao {
     
     }
     
+    
     public AlunoNota Menor(List<AlunoNota> lstNotas)
     {
         AlunoNota menor;
