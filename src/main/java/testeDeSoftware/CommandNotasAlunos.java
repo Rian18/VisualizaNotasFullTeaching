@@ -3,6 +3,7 @@ package testeDeSoftware;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -25,10 +26,14 @@ public class CommandNotasAlunos implements Comando {
         Operacao op = new Operacao();
         Double media = op.Media(turma.getLstAluno());
         AlunoNota menor = op.Menor(turma.getLstAluno());
+        double medianaNota = op.mediana(turma.getLstAluno());
+        double desvioPadrao = op.getDesvioPadrao(turma.getLstAluno());
+        
         AlunoNota maior = op.Maior(turma.getLstAluno());
         op.Aprovados(turma.getLstAluno());
         op.Reprovados(turma.getLstAluno());
         
+           
         Gson gson = new Gson();
         String alunosJson = gson.toJson(turma.getLstAluno());
 
@@ -37,6 +42,8 @@ public class CommandNotasAlunos implements Comando {
         request.setAttribute("media", media);
         request.setAttribute("menor", menor);
         request.setAttribute("maior", maior);
+        request.setAttribute("mediana", medianaNota);
+        request.setAttribute("desvioPadrao", desvioPadrao);
         request.setAttribute("aprovados", op.Aprovados(turma.getLstAluno()));
         request.setAttribute("reprovados", op.Reprovados(turma.getLstAluno()));
 

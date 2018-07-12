@@ -7,9 +7,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Notas dos alunos</title>
         <%@include file ="jspf/cabecalho.jspf"%>
-       
+        <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+        
+        
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
+            
+            
             var dados = <%=request.getAttribute("alunosJson")%>;
             google.charts.load("current", {packages: ['corechart']});
             google.charts.setOnLoadCallback(drawChart);
@@ -46,6 +54,7 @@
         </script>
     </head>
     <body>
+       
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <ul class="nav navbar-nav">
@@ -58,56 +67,68 @@
                 <h1>Notas da disciplina </h1>
             </div>
             <div class="container">
-                <table class="table table-hover">
-                    <thead>
-                        <tr class="table-primary">
+                <table class="table table table-striped" >
+                <thead>
+                    <tr>
+                       <tr class="table-primary" style="background-color: black ;color: white ">
                             <th><center>Aluno</center></th>
                     <th><center>Nota</center></th>
                     </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="aluno" items="${turmaAlunos}">
-                            <tr>
-                                <td><center>${aluno.nome}</center></td> 
+                </thead>
+                <tbody>
+                     <tr><c:forEach var="aluno" items="${turmaAlunos}">
+                    
+                        <td><center>${aluno.nome}</center></td> 
                         <td><center>${aluno.nota}</center></td> 
-                        </tr>
+                    </tr>   
                     </c:forEach>
                     </tbody>
 
                 </table>
+                <div class="container" >
+                <h3> Relatório da turma</h3>    
+                
                 Média da Turma: ${media} <br/>
                 Menor Nota: ${menor.nome} <br/>
                 Maior Nota: ${maior.nome} <br/>
-                Mediana da Turma: ${maior.nome} <br/>
-                Desvio Padrão das Notas da Turma: ${maior.nome} <br/>
-                <table class="table table-hover">
-                    <thead>
-                        <tr class="table-primary">
+                Mediana da Turma: ${mediana} <br/>
+                Desvio Padrão das Notas da Turma: ${desvioPadrao} <br/>
+                </div>
+                <br/>
+                  <div class="container" >
+                 <table class="table table table-striped" >
+                <thead>
+                    <tr>
+                       <tr class="table-primary" style="background-color: blue ;color: white ">
                             <th><center>Aprovados</center></th>
                     <th><center>Notas</center></th>
                     </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="aprovado" items="${aprovados}">
-                            <tr>
-                                <td><center>${aprovado.nome}</center></td> 
+                            <tr style="background-color: #75BDED ;color: black ">
+                                <td ><center>${aprovado.nome}</center></td> 
                         <td><center>${aprovado.nota}</center></td> 
                         </tr>
                     </c:forEach>
                     </tbody>
 
                 </table>
+                      
+                      
+                  </div>
+                <hr>
                 <br/>
                 <table class="table table-hover">
                     <thead>
-                        <tr class="table-primary">
+                        <tr class="table-primary" style="background-color: red ;color: black ">
                             <th><center>Reprovados</center></th>
                     <th><center>Notas</center></th>
                     </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="reprovado" items="${reprovados}">
-                            <tr>
+                            <tr style="background-color: #F88181 ;color: black ">
                                 <td><center>${reprovado.nome}</center></td> 
                         <td><center>${reprovado.nota}</center></td> 
                         </tr>
@@ -120,7 +141,35 @@
             </div>
 
         </div>
-     <div id="columnchart_values" style="width: 900px; height: 300px;"></div>
-</body>
 
+                <div class="container" >                    
+                   
+                        <div class="panel-heading">
+                        Nota x Aluno
+                                </div>
+                        <div class="panel-body">
+                          <div id="bar-example"></div>
+                        </div>
+                    </div>            
+                
+            </div>
+        </div>
+    </div>
+
+    
+    
+    </body>
+
+     <script language="JavaScript" type="text/javascript">
+         var dados = <%=request.getAttribute("alunosJson")%>
+        Morris.Bar({
+          element: 'bar-example',
+          data:  dados,
+          xkey: 'nome',
+          ykeys: ['nota'],
+          labels: ['Nota']
+        });
+
+ </script>    
 </html>
+
