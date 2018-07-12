@@ -2,8 +2,8 @@ package testeDeSoftware;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
 /**
  *
  * @author Rian Alves
@@ -73,48 +73,63 @@ public class Operacao {
     
     }
  
-    public AlunoNota mediana(List<AlunoNota> lstNotas){
+    public double mediana(List<AlunoNota> lstNotas){
+        
+       List<Double> listNotas = new ArrayList<Double>();
+        
         AlunoNota mediana = null;
         AlunoNota aux = null;
         List<AlunoNota> lstNotasOrdenada;
         int sizeList = lstNotas.size();
-        int meio, depoisMeio;
-        double medianna;
+        double medianaNota;
+        
         
         for(int i = 0; i<lstNotas.size(); i++){
-            for(int j = 0; j<lstNotas.size()-1; j++){
-                if(lstNotas.get(j).getNota() > lstNotas.get(j+1).getNota()){
-                    aux = lstNotas.get(j);
-                    lstNotas.set(j, lstNotas.get(j+1));
-                    lstNotas.set(j+1, aux);
-                }
-            }
+        
+            listNotas.add(lstNotas.get(i).getNota());
         }
         
-        if(sizeList%2 == 0){
-            meio = sizeList/2;
-            depoisMeio = meio + 1;
-            medianna = (lstNotas.get(meio).getNota()+lstNotas.get(depoisMeio).getNota())/2;
-            mediana.setNota(medianna);
+        Collections.sort(listNotas);
+        
+        if(listNotas.size()%2==0){
+            double medianaNota1 = listNotas.get(listNotas.size()/2);
+            double medianaNota2 = listNotas.get(listNotas.size()/2 - 1);
+            medianaNota = (medianaNota1 + medianaNota2)*0.5;
         }else{
-            sizeList--;
-            meio = sizeList/2;
-            medianna = lstNotas.get(meio).getNota();
-            mediana.setNota(medianna);
+          medianaNota = listNotas.get(listNotas.size()/2);
         }
-        return mediana;
+                
+          
+        return medianaNota;
     }
 
-    public strictfp Double getDesvioPadrao(List<AlunoNota> lstNotas) {
-        Double media = Media(lstNotas);
-        int tam = lstNotas.size();
-        Double desvPadrao = 0D;
-        for (AlunoNota vlr : lstNotas){
-            Double aux = vlr.getNota() - media;
-            desvPadrao += aux * aux;
+   public double getDesvioPadrao(List<AlunoNota> lstNotas){
+       
+    double[] vet = new double [lstNotas.size()];
+     for(int i = 0; i<lstNotas.size(); i++){
+        
+            vet[i] = lstNotas.get(i).getNota();
         }
-        return Math.sqrt(desvPadrao / (tam - 1));
-        }
+        double soma = 0;
+        
+        for (int n = 0; n<lstNotas.size(); n++ )
+            soma = soma + vet[n];
+        double media = soma /11;
+      
+        double dife[] = new double[11];
+        for (int n = 0; n<lstNotas.size(); n++ )
+            dife[n] = vet[n]-media;
+      
+        double quad[] = new double[11];
+        for (int n = 0; n<lstNotas.size(); n++ )
+            quad[n] = Math.pow(dife[n], 2);
+        double somaquad = 0;
+        for (int n = 0; n<lstNotas.size(); n++ )
+            somaquad = somaquad + quad[n];
+        double desvio = Math.pow(somaquad/11, 0.5);
+        
+    return desvio;
+}
     
     
     
